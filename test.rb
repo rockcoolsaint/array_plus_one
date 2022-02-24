@@ -1,10 +1,21 @@
-def array_plus_1(list)
-  return "array can't be empty" if list.empty?
-  return nil if list.any? { |item| !item.kind_of? Numeric }
-  return nil if list.any? { |item| item < 0 || !item.integer? || item > 9 }
+require "./task"
+require "test/unit"
+ 
+class TestArrayPlusOne < Test::Unit::TestCase
 
-  result = list.join().to_i + 1
-  return result.to_s.split('').map(&:to_i)
+  def test_array_valid_values
+    assert_equal(array_plus_1([2,3,9]), [2,4,0])
+    assert_equal(array_plus_1([2,9,9]), [3,0,0])
+    assert_equal(array_plus_1([2,9]), [3,0])
+  end
+
+  def test_for_nil
+    assert_equal(array_plus_1([2,3,-2]), nil)
+    assert_equal(array_plus_1([-2,3,2]), nil)
+    assert_equal(array_plus_1([2,-3,2]), nil)
+    assert_equal(array_plus_1([-2,3]), nil)
+    assert_equal(array_plus_1([2,13]), nil)
+    assert_equal(array_plus_1(['a',3]), nil)
+  end
+
 end
-
-print array_plus_1([3,9,19])
